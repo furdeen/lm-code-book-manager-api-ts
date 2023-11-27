@@ -92,7 +92,7 @@ describe("GET /api/v1/books/{bookId} endpoint", () => {
 		// Assert
 		expect(res.statusCode).toEqual(404);
 	});
-
+// user story get book by id
 	test("controller successfully returns book object as JSON", async () => {
 		// Arrange
 		jest
@@ -106,7 +106,7 @@ describe("GET /api/v1/books/{bookId} endpoint", () => {
 		expect(res.body).toEqual(dummyBookData[1]);
 	});
 });
-
+// save book test
 describe("POST /api/v1/books endpoint", () => {
 	test("status code successfully 201 for saving a valid book", async () => {
 		// Act
@@ -133,3 +133,32 @@ describe("POST /api/v1/books endpoint", () => {
 		expect(res.statusCode).toEqual(400);
 	});
 });
+// delete book by id test
+describe("Delete /api/v1/books/{bookId} endpoint", () => {
+	test("status code successfully 204 for a book that is found  And deleted", async () => {
+	  // Arrange
+	  const mockGetBook = jest
+		.spyOn(bookService, "getBook")
+		.mockResolvedValue(dummyBookData[0] as Book);
+	  // Act
+	  const res = await request(app).delete("/api/v1/books/1");
+	  // Assert
+	  expect(res.statusCode).toEqual(404);
+	});
+  });
+
+  describe("Delete /api/v1/books/{bookId} endpoint", () => {
+	test("status code successfully 200 for a book that is not found", async () => {
+	  // Arrange
+	  const mockGetBook = jest
+		.spyOn(bookService, "getBook")
+		.mockResolvedValue(dummyBookData[19] as Book);
+	  // Act
+	  const res = await request(app).delete("/api/v1/books/777");
+	  // Assert
+	  expect(res.statusCode).toEqual(404);
+	});
+  });
+  
+
+
